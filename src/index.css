@@ -1,0 +1,270 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 33% 94%; /* #F5F0E6 宣纸白 */
+    --foreground: 40 10% 16%; /* #2C2A25 墨黑 */
+    --card: 40 30% 96%;
+    --card-foreground: 40 10% 16%;
+    --popover: 40 30% 96%;
+    --popover-foreground: 40 10% 16%;
+    --primary: 355 60% 40%; /* #9D2933 朱砂红 */
+    --primary-foreground: 40 33% 94%;
+    --secondary: 100 12% 30%; /* #4A5742 竹青 */
+    --secondary-foreground: 40 33% 94%;
+    --muted: 40 20% 88%;
+    --muted-foreground: 40 10% 40%;
+    --accent: 40 20% 88%;
+    --accent-foreground: 40 10% 16%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 40 20% 82%;
+    --input: 40 20% 82%;
+    --ring: 355 60% 40%;
+    --radius: 0.5rem;
+    --sidebar-background: 40 30% 96%;
+    --sidebar-foreground: 40 10% 16%;
+    --sidebar-primary: 355 60% 40%;
+    --sidebar-primary-foreground: 40 33% 94%;
+    --sidebar-accent: 40 20% 88%;
+    --sidebar-accent-foreground: 40 10% 16%;
+    --sidebar-border: 40 20% 82%;
+    --sidebar-ring: 355 60% 40%;
+  }
+
+  .dark {
+    --background: 40 10% 10%;
+    --foreground: 40 20% 92%;
+    --card: 40 10% 14%;
+    --card-foreground: 40 20% 92%;
+    --popover: 40 10% 14%;
+    --popover-foreground: 40 20% 92%;
+    --primary: 355 50% 50%;
+    --primary-foreground: 40 33% 94%;
+    --secondary: 100 12% 35%;
+    --secondary-foreground: 40 33% 94%;
+    --muted: 40 10% 20%;
+    --muted-foreground: 40 10% 60%;
+    --accent: 40 10% 20%;
+    --accent-foreground: 40 20% 92%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 40 10% 22%;
+    --input: 40 10% 22%;
+    --ring: 355 50% 50%;
+    --sidebar-background: 40 10% 12%;
+    --sidebar-foreground: 40 20% 92%;
+    --sidebar-primary: 355 50% 50%;
+    --sidebar-primary-foreground: 40 33% 94%;
+    --sidebar-accent: 40 10% 20%;
+    --sidebar-accent-foreground: 40 20% 92%;
+    --sidebar-border: 40 10% 22%;
+    --sidebar-ring: 355 50% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Noto Serif SC", "Source Han Serif SC", "SimSun", serif;
+  }
+}
+
+/* Chinese ink painting aesthetics */
+.ink-brush {
+  filter: url(#ink-filter);
+}
+
+.paper-texture {
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+/* Smooth transitions */
+.transition-smooth {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Card hover effect */
+.card-hover {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.15);
+}
+
+.dark .card-hover:hover {
+  box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.4);
+}
+
+/* Ripple effect */
+.ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgba(157, 41, 51, 0.2) 10%, transparent 10.01%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transform: scale(10, 10);
+  opacity: 0;
+  transition: transform 0.5s, opacity 0.5s;
+}
+
+.ripple:active::after {
+  transform: scale(0, 0);
+  opacity: 0.3;
+  transition: 0s;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* Animation keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes inkSpread {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.4s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out forwards;
+}
+
+.animate-ink-spread {
+  animation: inkSpread 0.8s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Stagger children animations */
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+
+/* Glassmorphism */
+.glass {
+  background: rgba(245, 240, 230, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass {
+  background: rgba(30, 28, 25, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Typography */
+.heading-serif {
+  font-family: "Noto Serif SC", "Source Han Serif SC", serif;
+  font-weight: 700;
+}
+
+.body-serif {
+  font-family: "Noto Serif SC", "Source Han Serif SC", serif;
+  font-weight: 400;
+}
+
+/* Selection color */
+::selection {
+  background: hsl(var(--primary) / 0.2);
+  color: hsl(var(--foreground));
+}
