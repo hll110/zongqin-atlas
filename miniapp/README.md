@@ -60,21 +60,35 @@ miniapp/
 3. 点击菜单：运行 -> 运行到小程序模拟器 -> 微信开发者工具
 4. 需要安装微信开发者工具并登录
 
-### 方式二：CLI
+### 方式二：CLI + 微信开发者工具
 
-```bash
-# 安装 uni-app CLI
-npm install -g @dcloudio/uni-app
+> **注意**：`miniapp/` 是 uni-app **源码目录**，根目录没有 `app.json`，不能直接作为小程序项目打开。
 
-# 进入项目
+```powershell
 cd miniapp
 
-# 安装依赖
-npm install
+# 安装依赖（PowerShell 若报脚本策略错误，用 npm.cmd）
+npm.cmd install --include=dev
 
-# 编译到微信小程序
-npm run dev:mp-weixin
+# 编译到微信小程序（保持此命令运行，支持热更新）
+npm.cmd run dev:mp-weixin
 ```
+
+编译成功后，在微信开发者工具中：
+
+- **推荐**：继续打开 `miniapp` 文件夹（已配置 `miniprogramRoot` 指向 `dist/dev/mp-weixin/`）
+- **或**：直接打开 `miniapp/dist/dev/mp-weixin` 文件夹
+
+**不要**在未编译时直接打开 `miniapp` 并期望出现 `app.json`。
+
+### 性能优化（按需注入 / 用时注入）
+
+已在 `src/manifest.json` 的 `mp-weixin` 节点配置：
+
+- `"lazyCodeLoading": "requiredComponents"` — 按需注入，仅加载当前页所需代码
+- `"lazyloadPlaceholderEnable": true` — 配合占位组件实现用时注入
+
+微信开发者工具请使用 **基础库 2.20.1+**，重新编译后可在「代码质量」面板确认该项已通过。
 
 ## 发布部署
 

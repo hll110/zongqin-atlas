@@ -473,4 +473,9 @@ async function main() {
   console.log(`Seeded ${relations.length} relations successfully!`);
 }
 
-main().catch(console.error);
+main()
+  .then(() => process.exit(0))
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
